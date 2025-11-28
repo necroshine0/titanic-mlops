@@ -1,0 +1,12 @@
+creation_timestamp: 1763729503743
+current_stage: Production
+description: ''
+last_updated_timestamp: 1763729520327
+name: titanic
+run_id: a6219e1bdbf64295a919a60476af7f4e
+run_link: ''
+source: mlflow-artifacts:/339287653448094885/a6219e1bdbf64295a919a60476af7f4e/artifacts/model
+status: READY
+status_message: null
+user_id: null
+version: 2

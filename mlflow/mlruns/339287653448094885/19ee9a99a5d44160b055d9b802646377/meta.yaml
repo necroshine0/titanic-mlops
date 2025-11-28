@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/339287653448094885/19ee9a99a5d44160b055d9b802646377/artifacts
+end_time: 1763728683976
+entry_point_name: ''
+experiment_id: '339287653448094885'
+lifecycle_stage: active
+run_id: 19ee9a99a5d44160b055d9b802646377
+run_name: titanic-lr-run
+run_uuid: 19ee9a99a5d44160b055d9b802646377
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763728678809
+status: 3
+tags: []
+user_id: oleg

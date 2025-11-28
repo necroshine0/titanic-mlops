@@ -1,0 +1,6 @@
+artifact_location: mlflow-artifacts:/770293554194884980
+creation_time: 1763731433395
+experiment_id: '770293554194884980'
+last_update_time: 1763731433395
+lifecycle_stage: active
+name: titanic-model-RF

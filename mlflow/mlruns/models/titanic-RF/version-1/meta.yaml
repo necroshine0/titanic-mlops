@@ -1,0 +1,12 @@
+creation_timestamp: 1763731521915
+current_stage: Production
+description: ''
+last_updated_timestamp: 1763731534162
+name: titanic-RF
+run_id: 7e50cb7bd85d4531baca55253d1ec727
+run_link: ''
+source: mlflow-artifacts:/770293554194884980/7e50cb7bd85d4531baca55253d1ec727/artifacts/model
+status: READY
+status_message: null
+user_id: null
+version: 1

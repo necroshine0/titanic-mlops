@@ -1,0 +1,29 @@
+artifact_path: model
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.10.12
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+mlflow_version: 2.1.1
+model_uuid: a86f644b75f24b3ab9bfc36ee45957ba
+run_id: 7e50cb7bd85d4531baca55253d1ec727
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  type: dataframe
+signature:
+  inputs: '[{"name": "Pclass", "type": "long"}, {"name": "Sex", "type": "long"}, {"name":
+    "Age", "type": "double"}, {"name": "SibSp", "type": "long"}, {"name": "Parch",
+    "type": "long"}, {"name": "Fare", "type": "double"}, {"name": "Embarked", "type":
+    "string"}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+utc_time_created: '2025-11-21 13:24:29.139883'
