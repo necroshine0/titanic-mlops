@@ -1,0 +1,51 @@
+name: test services and predict
+
+on: [push, pull_request]
+
+jobs:
+  health-checks:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Health Check - MLflow
+      run: |
+        echo "Checking MLflow service at ${{ secrets.MLFLOW_TRACKING_URI }}"
+        response_code=$(curl -s -o /dev/null -w "%{http_code}" "${{ secrets.MLFLOW_TRACKING_URI }}" || echo "000")
+        if [ "$response_code" -eq 200 ]; then
+          echo "✅ MLflow service is healthy (HTTP $response_code)"
+        else
+          echo "❌ MLflow service is not responding (HTTP $response_code)"
+          exit 1
+        fi
+
+    - name: Health Check - FastAPI Docs
+      run: |
+        echo "Checking FastAPI docs at ${{ secrets.FASTAPI_URI }}/docs"
+        response_code=$(curl -s -o /dev/null -w "%{http_code}" "${{ secrets.FASTAPI_URI }}/docs" || echo "000")
+        
+        if [ "$response_code" -eq 200 ]; then
+          echo "✅ FastAPI docs are accessible (HTTP $response_code)"
+        else
+          echo "❌ FastAPI docs are not accessible (HTTP $response_code)"
+          exit 1
+        fi
+    
+    - name: Test Prediction Endpoint
+      run: |
+        echo "Testing prediction endpoint with example_input.json"
+        response=$(curl -s -X POST ${{ secrets.FASTAPI_URI }}/predict \
+          -H "Content-Type: application/json" \
+          --data-binary @example_input.json)
+
+        echo "Raw response: $response"
+        
+        prob=$(echo "$response" | jq -r '.prob')
+        if [ "$prob" = "null" ] || [ -z "$prob" ]; then
+          echo "Error: 'prob' field is null or empty in response"
+          exit 1
+        else
+          echo "✅ Response value (prob): $prob"
+        fi
