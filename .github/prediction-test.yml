@@ -1,0 +1,28 @@
+name: Prediction Endpoint Test
+
+on:
+  workflow_run:
+    workflows: ["FastAPI Health Check"]
+    types:
+      - completed
+
+jobs:
+  test-predict-endpoint:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Test Prediction Endpoint
+      run: |
+        echo "Testing prediction endpoint with example_input.json"
+        response=$(curl -s -X POST ${{ secrets.FASTAPI_URI }}/predict \
+          -H "Content-Type: application/json" \
+          --data-binary @example_input.json)
+        echo "Raw response: $response"
+        prob=$(echo "$response" | jq -r '.prob')
+        if [ "$prob" = "null" ] || [ -z "$prob" ]; then
+          echo "Error: 'prob' field is null or empty in response"
+          exit 1
+        else
+          echo "✅ Response value (prob): $prob"
+        fi

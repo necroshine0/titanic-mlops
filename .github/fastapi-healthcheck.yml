@@ -1,0 +1,24 @@
+name: FastAPI Health Check
+
+on:
+  workflow_run:
+    workflows: ["MLflow Health Check"]
+    types:
+      - completed
+
+jobs:
+  health-check-fastapi:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Health Check - FastAPI Docs
+      run: |
+        echo "Checking FastAPI docs at ${{ secrets.FASTAPI_URI }}/docs"
+        response_code=$(curl -s -o /dev/null -w "%{http_code}" "${{ secrets.FASTAPI_URI }}/docs" || echo "000")
+        if [ "$response_code" -eq 200 ]; then
+          echo "✅ FastAPI docs are accessible (HTTP $response_code)"
+        else
+          echo "❌ FastAPI docs are not accessible (HTTP $response_code)"
+          exit 1
+        fi
