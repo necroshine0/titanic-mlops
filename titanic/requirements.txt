@@ -1,6 +1,6 @@
 fastapi
 scikit-learn
-unicorn
+uvicorn
 pydantic
 mlflow==2.1.1
 python-dotenv
